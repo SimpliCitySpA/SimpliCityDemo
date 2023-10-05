@@ -1,0 +1,17 @@
+credentials:
+  usernames:
+    rhurtubia:
+      email: ricardo@simpli-city.cl
+      name: Ricardo Hurtubia
+      password: $2b$12$r3.KutJPLXTQqofh9QEW2ec7PM0JuRASRPJdoNfPxCd8EY0vCujT6
+    husilva:
+      email: hugo@simpli-city.cl
+      name: Hugo Silva
+      password: $2b$12$JB3.0Zeg1DuVyF7CaCzFJuCDPswCzaWk5SCq6MkYhafeBxO5tW/O2
+cookie:
+  expiry_days: 0
+  key: some_signature_key # Must be string
+  name: some_cookie_name
+preauthorized:
+  emails:
+  - test@simpli-city.cl
