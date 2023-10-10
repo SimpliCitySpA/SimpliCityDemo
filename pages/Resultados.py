@@ -16,11 +16,16 @@ st.markdown("""
             <br>
             """, unsafe_allow_html=True)
 
-tab_names = ['METROS CUADRADOS HABITACIONAL PEQUEÑO', 
+tab_names1 = ['METROS CUADRADOS HABITACIONAL PEQUEÑO', 
             'METROS CUADRADOS HABITACIONAL MEDIO', 
             'METROS CUADRADOS HABITACIONAL GRANDE', 
+            'METROS CUADRADOS HABITACIONALES',
             'TOTAL DE PARCELAS DE AGRADO', 
             'TOTAL DE COMERCIOS']
+
+tab_names = ['HABITACIONAL', 
+            'PARCELA DE AGRADO', 
+            'COMERCIO']
 
 utility_files = ["Base Scenario/Utility Functions/H1.html",
             "Base Scenario/Utility Functions/H2.html",
@@ -28,18 +33,49 @@ utility_files = ["Base Scenario/Utility Functions/H1.html",
             "Base Scenario/Utility Functions/K.html",
             "Base Scenario/Utility Functions/C.html"]
 
-selected_tab = st.selectbox("ESCOGE UN AGENTE", tab_names)
-
-#st.divider()
-
 st.warning('Para asegurar un desempeño fluido y eficaz de los mapas y visualizaciones, recomendamos encarecidamente abrir y explorar una pestaña a la vez. Abrir múltiples pestañas simultáneamente podría comprometer la carga y visualización correcta de los mapas.', icon="⚠️")
 
-tab_index = tab_names.index(selected_tab)
+selected_tab = st.selectbox("ESCOGE UN AGENTE", tab_names)
 
-with st.expander("FUNCIONES DE UTILIDAD"):
-    with open(utility_files[tab_index], "r", encoding="utf-8") as f:
-        html_content = f.read()
-    st.components.v1.html(html_content, width=None, height=300, scrolling=True)
+if selected_tab == 'HABITACIONAL':
+    col1, col2 = st.columns(2)
+
+    with col1: 
+        st.session_state.desagg = st.checkbox('¿Desagregar?')
+
+    with col2:
+        if st.session_state.desagg:
+            agent = st.radio(
+                "AGENTE HABITACIONAL",
+                ["Pequeño", "Mediano", "Grande"])
+            if agent == 'Pequeño':
+                st.name = 'METROS CUADRADOS HABITACIONAL PEQUEÑO'
+            elif agent == 'Mediano':
+                st.name = 'METROS CUADRADOS HABITACIONAL MEDIO'
+            elif agent == 'Grande':
+                st.name = 'METROS CUADRADOS HABITACIONAL GRANDE'
+        else:
+            st.name = 'METROS CUADRADOS HABITACIONALES'
+
+elif selected_tab == 'PARCELA DE AGRADO':
+    st.name = 'TOTAL DE PARCELAS DE AGRADO'
+
+elif selected_tab == 'COMERCIO':
+    st.name = 'TOTAL DE COMERCIOS'
+
+st.session_state.tab_index = tab_names1.index(st.name)
+
+st.divider()
+
+#tab_index = tab_names.index(selected_tab)
+st.subheader(st.name)
+st.subheader(" ")
+
+if st.session_state.desagg == True:
+    with st.expander("FUNCIONES DE UTILIDAD"):
+        with open(utility_files[st.session_state.tab_index], "r", encoding="utf-8") as f:
+            html_content = f.read()
+        st.components.v1.html(html_content, width=None, height=300, scrolling=True)
 
 with st.expander("RESULTADOS POR ESCENARIO"):
     col1, col2 = st.columns(2)
@@ -74,10 +110,11 @@ with st.expander("RESULTADOS POR ESCENARIO"):
         map_files1 = ["Base Maps/H1 2050 PRC.html",
                 "Base Maps/H2 2050 PRC.html",
                 "Base Maps/H3 2050 PRC.html",
+                "Base Maps/H 2050 PRC.html",
                 "Base Maps/K 2050 PRC.html",
                 "Base Maps/C 2050 PRC.html"]
         
-        with open(map_files1[tab_index], "r", encoding="utf-8") as f:
+        with open(map_files1[st.session_state.tab_index], "r", encoding="utf-8") as f:
             html_content = f.read()
         st.components.v1.html(html_content, width=None, height=700, scrolling=True)
 
@@ -111,10 +148,11 @@ with st.expander("RESULTADOS POR ESCENARIO"):
         map_files2 = ["Alternative Maps/H1 2050 PRC.html",
                 "Alternative Maps/H2 2050 PRC.html",
                 "Alternative Maps/H3 2050 PRC.html",
+                "Alternative Maps/H 2050 PRC.html",
                 "Alternative Maps/K 2050 PRC.html",
                 "Alternative Maps/C 2050 PRC.html"]
 
-        with open(map_files2[tab_index], "r", encoding="utf-8") as f:
+        with open(map_files2[st.session_state.tab_index], "r", encoding="utf-8") as f:
             html_content = f.read()
         st.components.v1.html(html_content, width=None, height=700, scrolling=True)
 
@@ -136,11 +174,12 @@ with st.expander("COMPARATIVA DE ESCENARIOS"):
     map_files3 = ["maps/H1 2050 PRC.html",
                 "maps/H2 2050 PRC.html",
                 "maps/H3 2050 PRC.html",
+                "maps/H 2050 PRC.html",
                 "maps/K 2050 PRC.html",
                 "maps/C 2050 PRC.html"]
 
 
-    with open(map_files3[tab_index], "r", encoding="utf-8") as f:
+    with open(map_files3[st.session_state.tab_index], "r", encoding="utf-8") as f:
         html_content = f.read()
 
     st.components.v1.html(html_content, width=None, height=700, scrolling=False)
