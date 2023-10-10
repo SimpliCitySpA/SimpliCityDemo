@@ -19,13 +19,13 @@ st.markdown("""
 tab_names1 = ['METROS CUADRADOS HABITACIONAL PEQUEÑO', 
             'METROS CUADRADOS HABITACIONAL MEDIO', 
             'METROS CUADRADOS HABITACIONAL GRANDE', 
-            'METROS CUADRADOS HABITACIONALES',
             'TOTAL DE PARCELAS DE AGRADO', 
-            'TOTAL DE COMERCIOS']
+            'TOTAL DE COMERCIOS',
+            'METROS CUADRADOS HABITACIONALES',]
 
 tab_names = ['HABITACIONAL', 
             'PARCELA DE AGRADO', 
-            'COMERCIO']
+            'COMERCIAL']
 
 utility_files = ["Base Scenario/Utility Functions/H1.html",
             "Base Scenario/Utility Functions/H2.html",
@@ -58,9 +58,11 @@ if selected_tab == 'HABITACIONAL':
             st.name = 'METROS CUADRADOS HABITACIONALES'
 
 elif selected_tab == 'PARCELA DE AGRADO':
+    st.session_state.desagg = True
     st.name = 'TOTAL DE PARCELAS DE AGRADO'
 
-elif selected_tab == 'COMERCIO':
+elif selected_tab == 'COMERCIAL':
+    st.session_state.desagg = True
     st.name = 'TOTAL DE COMERCIOS'
 
 st.session_state.tab_index = tab_names1.index(st.name)
@@ -110,9 +112,9 @@ with st.expander("RESULTADOS POR ESCENARIO"):
         map_files1 = ["Base Maps/H1 2050 PRC.html",
                 "Base Maps/H2 2050 PRC.html",
                 "Base Maps/H3 2050 PRC.html",
-                "Base Maps/H 2050 PRC.html",
                 "Base Maps/K 2050 PRC.html",
-                "Base Maps/C 2050 PRC.html"]
+                "Base Maps/C 2050 PRC.html",
+                "Base Maps/H 2050 PRC.html"]
         
         with open(map_files1[st.session_state.tab_index], "r", encoding="utf-8") as f:
             html_content = f.read()
@@ -148,9 +150,9 @@ with st.expander("RESULTADOS POR ESCENARIO"):
         map_files2 = ["Alternative Maps/H1 2050 PRC.html",
                 "Alternative Maps/H2 2050 PRC.html",
                 "Alternative Maps/H3 2050 PRC.html",
-                "Alternative Maps/H 2050 PRC.html",
                 "Alternative Maps/K 2050 PRC.html",
-                "Alternative Maps/C 2050 PRC.html"]
+                "Alternative Maps/C 2050 PRC.html",
+                "Alternative Maps/H 2050 PRC.html"]
 
         with open(map_files2[st.session_state.tab_index], "r", encoding="utf-8") as f:
             html_content = f.read()
@@ -174,9 +176,9 @@ with st.expander("COMPARATIVA DE ESCENARIOS"):
     map_files3 = ["maps/H1 2050 PRC.html",
                 "maps/H2 2050 PRC.html",
                 "maps/H3 2050 PRC.html",
-                "maps/H 2050 PRC.html",
                 "maps/K 2050 PRC.html",
-                "maps/C 2050 PRC.html"]
+                "maps/C 2050 PRC.html",
+                "maps/H 2050 PRC.html"]
 
 
     with open(map_files3[st.session_state.tab_index], "r", encoding="utf-8") as f:
